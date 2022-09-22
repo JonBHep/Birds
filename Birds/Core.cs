@@ -1014,4 +1014,10 @@ public sealed class Core
         BirdGenus gnus = GenusDictionary[genus];
         return gnus.FamilyKey;
     }
+
+    public static void StartProcess(string chemin)
+    {
+        System.Diagnostics.ProcessStartInfo pinfo = new(chemin) { UseShellExecute = true };
+        System.Diagnostics.Process.Start(pinfo);
+    }
 }

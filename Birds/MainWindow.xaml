@@ -3,10 +3,194 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Birds"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Birds" Height="350" Width="1025" Loaded="Window_Loaded" ContentRendered="Window_ContentRendered" ResizeMode="NoResize" Closing="Window_Closing">
+    <Window.Resources>
+        <Style x:Key="CaptionStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="FontFamily" Value="Consolas"></Setter>
+            <Setter Property="FontSize" Value="10"></Setter>
+        </Style>
+        <Style x:Key="ValueStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="FontFamily" Value="Consolas"></Setter>
+            <Setter Property="FontSize" Value="12"></Setter>
+            <Setter Property="Foreground" Value="SaddleBrown"></Setter>
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Menu>
+            <MenuItem Margin="6" Header="File">
+                <MenuItem Header="BOU - The British List pdf document" Click="BouListPdfMenuItem_Click"/>
+                <MenuItem Header="Photo quiz" Click="QuizPhotoMenuItem_Click"/>
+                <MenuItem Header="Audio quiz" Click="QuizAudioMenuItem_Click"/>
+                <Separator/>
+                <MenuItem Header="Close" FontWeight="Bold" Click="CloseMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Margin="6" Header="Bird">
+                <MenuItem x:Name="BirdDetailsMenuItem" Header="Edit bird details" Click="BirdDetailsMenuItem_Click" IsEnabled="False"/>
+                <MenuItem x:Name="BirdCreateMenuItem" Header="Add new bird details" Click="BirdCreateMenuItem_Click"/>
+                <MenuItem x:Name="BirdDeleteMenuItem" Header="Delete bird" Click="BirdDeleteMenuItem_Click" IsEnabled="False"/>
+                <MenuItem x:Name="BirdOccurrenceMenuItem" Header="Explain bird's occurrence code" Click="BirdOccurrenceMenuItem_Click" IsEnabled="False"/>
+                <Separator/>
+                <MenuItem x:Name="SearchEngMenuItem" Header="Find images by English name" Click="SearchEngButton_Click" IsEnabled="False"/>
+                <MenuItem x:Name="SearchSciMenuItem" Header="Find images by scientific name" Click="SearchSciButton_Click" IsEnabled="False"/>
+                <Separator/>
+                <MenuItem x:Name="XenoCantoSpeciesMenuItem" Header="XenoCanto birdsong samples for this bird" Click="XenoCantoSpeciesMenuItem_Click" IsEnabled="False"/>
+            </MenuItem>
+            <MenuItem Margin="6" Header="Internet">
+                <MenuItem Header="The British List">
+                    <MenuItem Header="BTO - The British List" ToolTip="British Trust for Ornithology" Click="BtoListMenuItem_Click"/>
+                    <MenuItem Header="BOU - The British List" ToolTip="British Ornithologists' Union" Click="BouListMenuItem_Click"/>
+                </MenuItem>
+                <MenuItem x:Name="InternetBouMenuItem" Header="British Ornithologists' Union" Click="BouMenuItem_Click"/>
+                <MenuItem x:Name="InternetBtoMenuItem" Header="British Trust for Ornithology" Click="BtoMenuItem_Click"/>
+                <MenuItem x:Name="InternetAviBirdsMenuItem" Header="AviBirds" Click="AviBirdMenuItem_Click"/>
+                <MenuItem Header="BirdSpot" Click="BSpotMenuItem_Click"/>
+                <MenuItem Header="Oiseaux.net" Click="OiseauxNetMenuItem_Click"/>
+                <MenuItem x:Name="InternetInternetBirdCollectionMenuItem" Header="Internet Bird Collection" Click="InternetBirdCollectionMenuItem_Click"/>
+                <MenuItem x:Name="XenoCantoBirdsMenuItem" Header="XenoCanto Birdsong samples" Click="XenoCantoMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Margin="6" Header="List">
+                <MenuItem x:Name="ListUkEnglishMenuItem" Header="List current UK English names alphabetically" IsCheckable="True" IsChecked="True" Checked="ListChoiceMenuItem_Checked"/>
+                <MenuItem x:Name="ListInternationalMenuItem" Header="List International English names alphabetically" IsCheckable="True" Checked="ListChoiceMenuItem_Checked"/>
+                <MenuItem x:Name="ListAllEnglishMenuItem" Header="List all English names alphabetically" IsCheckable="True" Checked="ListChoiceMenuItem_Checked"/>
+                <MenuItem x:Name="ListScientificMenuItem" Header="List current scientific names alphabetically" IsCheckable="True" Checked="ListChoiceMenuItem_Checked"/>
+                <MenuItem x:Name="ListAllScientificMenuItem" Header="List all scientific names alphabetically" IsCheckable="True" Checked="ListChoiceMenuItem_Checked"/>
+                <MenuItem x:Name="ListFrenchMenuItem" Header="List French names alphabetically" IsCheckable="True" Checked="ListChoiceMenuItem_Checked"/>
+                <MenuItem x:Name="ListTaxonomicMenuItem" Header="List by taxonomic sequence" IsCheckable="True" Checked="ListChoiceMenuItem_Checked"/>
+                <Separator/>
+                <MenuItem x:Name="ListNoVideoMenuItem" Header="Only list birds with no images" IsCheckable="True" Checked="ListChoiceMenuItem_Checked" Unchecked="ListChoiceMenuItem_Checked"/>
+                <MenuItem x:Name="ListNoAudioMenuItem" Header="Only list birds with no audio clips" IsCheckable="True" Checked="ListChoiceMenuItem_Checked" Unchecked="ListChoiceMenuItem_Checked"/>
+                <Separator/>
+                <MenuItem x:Name="TaxonomicSequenceMenuItem" Header="Amend taxonomic sequence" Click="TaxonomicSequenceMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Margin="6" Header="Data">
+                <MenuItem  Header="Orders and Families" Click="TaxonomyMenuItem_Click"/>
+                <MenuItem Header="Sightings" Click="SightingsMenuItem_Click"/>
+                <MenuItem Header="Statistics" Click="StatsButton_Click"/>
+                <Separator></Separator>
+                <MenuItem Header="The BOU British List birds" Click="BritishListMenuItem_Click"/>
+                <MenuItem Header="My personal list" Click="PersonalListMenuItem_Click"/>
+                <MenuItem Header="List birds with distinct common and international English names" Click="NonCongruentNamesMenuItem_Click"/>
+                <MenuItem Header="Birds with BOU category other than 'A'" Click="NonABirdsMenuItem_Click"/>
+                <MenuItem Header="Complete index of names" Click="CompleteIndexMenuItem_Click"/>
+            </MenuItem>
+        </Menu>
+        
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <DockPanel>
+                    <Button DockPanel.Dock="Left" Margin="4 4 0 4" Click="CloseButton_Click" Width="60" Height="24">Close</Button>
+                    <TextBlock x:Name="StatsTextBlock" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="4 0 0 0">[stats]</TextBlock>
+                </DockPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Margin="12 4 4 4" FontFamily="WingDings">ü</TextBlock>
+                    <TextBlock VerticalAlignment="Center" >= Seen</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="12 4 4 4" FontFamily="WingDings">J</TextBlock>
+                    <TextBlock VerticalAlignment="Center" >= Familiar</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="12 4 4 4" FontFamily="WingDings">²</TextBlock>
+                    <TextBlock VerticalAlignment="Center" >= Rare</TextBlock>
+                </StackPanel>
+                <!--<StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Margin="12 4 4 4" FontFamily="WingDings" Text="q"></TextBlock>
+                    <TextBlock VerticalAlignment="Center" >= Images</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="12 4 4 4" FontFamily="WingDings" Text=">"></TextBlock>
+                    <TextBlock VerticalAlignment="Center" >= Sounds</TextBlock>
+                </StackPanel>-->
+                <TextBlock Margin="12,4,4,4" Text="P = Pictures    S = Sounds"></TextBlock>
+                <DockPanel Height="Auto">
+                    <TextBlock Margin="12 4 6 4" VerticalAlignment="Center">Filter</TextBlock>
+                    <Button DockPanel.Dock="Right" Margin="4 4 0 4" Click="ClearFilterButton_Click_1" Width="60" Height="24">Clear</Button>
+                    <Button DockPanel.Dock="Right" Margin="4 4 0 4" Click="ApplyFilterButton_Click" Width="60" Height="24">Apply</Button>
+                    <TextBox x:Name="FilterTextBox" VerticalAlignment="Center"></TextBox>
+                </DockPanel>
+            </StackPanel>
 
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ListBox x:Name="AlphabetListBox" Width="20" Background="AntiqueWhite" Margin="4 0 2 4" SelectionChanged="AlphabetListBox_SelectionChanged"></ListBox>
+                <ListBox x:Name="BirdListBox" Grid.Column="1" Margin="0 0 0 4" Background="Ivory"  SelectionChanged="BirdListBox_SelectionChanged"/>
+            </Grid>
+            
+        </Grid>
+        
+        <Border Grid.Column="1" Grid.RowSpan="2" CornerRadius="4" BorderBrush="SaddleBrown" BorderThickness="2" Background="Ivory" Margin="4">
+            <Grid Margin="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Image x:Name="BirdImage" Grid.Row="1" MouseDown="BirdImage_MouseDown"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                        <ColumnDefinition Width="140"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Style="{StaticResource CaptionStyle}" Grid.Row="0">English name</TextBlock>
+                    <TextBlock Style="{StaticResource CaptionStyle}" Grid.Row="1">Scientific name</TextBlock>
+                    <TextBlock Style="{StaticResource CaptionStyle}" Grid.Row="2">International English name</TextBlock>
+                    <TextBlock Style="{StaticResource CaptionStyle}" Grid.Column="2" Grid.Row="0" >Family</TextBlock>
+                    <TextBlock Style="{StaticResource CaptionStyle}" Grid.Column="2" Grid.Row="1" >BOU Code</TextBlock>
+                    <TextBlock Style="{StaticResource CaptionStyle}" Grid.Column="2" Grid.Row="2">Occurrence in UK</TextBlock>
+                    
+                    <ComboBox x:Name="SoundComboBox" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" SelectionChanged="SoundsComboBox_SelectionChanged"></ComboBox>
+                    <DockPanel Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2">
+                        <Button x:Name="SoundPlayButton" VerticalAlignment="Center" MinWidth="60" HorizontalAlignment="Left" Margin="4 0" Click="SoundPlayButton_Click" >Play</Button>
+                        <ProgressBar x:Name="SoundProgressBar" Grid.Row="3" Grid.Column="4" Foreground="DeepSkyBlue" BorderThickness="2" BorderBrush="CornflowerBlue" Background="CornflowerBlue" VerticalAlignment="Center" Height="10" Margin="0 0 4 0"></ProgressBar>
+                    </DockPanel>
+                    
+                    
+                    
+                    <TextBlock Style="{StaticResource ValueStyle}" Grid.Column="1" Grid.Row="0" x:Name="EnglishTextBlock"/>
+                    <TextBlock Style="{StaticResource ValueStyle}" Grid.Column="1" Grid.Row="1" x:Name="ScientificTextBlock"/>
+                    <TextBlock Style="{StaticResource ValueStyle}" Grid.Column="1" Grid.Row="2" x:Name="InternationalTextBlock"/>
+                    <TextBlock Style="{StaticResource ValueStyle}" Grid.Column="3" Grid.Row="0" x:Name="FamilyTextBlock"/>
+                    <TextBlock Style="{StaticResource ValueStyle}" Grid.Column="3" Grid.Row="1" x:Name="BouTextBlock"/>
+                    <TextBlock Style="{StaticResource ValueStyle}" x:Name="OccurrenceTextBlock" Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2"/>
+                    <CheckBox x:Name="RareCheckBox" Grid.Column="4" Grid.ColumnSpan="2" FontFamily="Consolas" IsHitTestVisible="False" ToolTip="Considered rare by British Birds Rarities Committee">Rare (BBRC)</CheckBox>
+                    <TextBlock Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center">Reliably recognised by</TextBlock>
+                    <CheckBox x:Name="FamiliarSightCheckBox" Grid.Column="5" Grid.Row="1" FontFamily="Consolas" IsHitTestVisible="False" HorizontalAlignment="Center">Sight</CheckBox>
+                    <CheckBox x:Name="FamiliarSoundCheckBox" Grid.Column="5" Grid.Row="2" FontFamily="Consolas" IsHitTestVisible="False" HorizontalAlignment="Center">Sound</CheckBox>
+                    <CheckBox x:Name="SeenCheckBox" Grid.Column="4" Grid.Row="1" FontFamily="Consolas" IsHitTestVisible="False">Seen wild</CheckBox>
+                    <CheckBox x:Name="FreqCheckBox" Grid.Column="4" Grid.Row="2" FontFamily="Consolas" IsHitTestVisible="False">Often seen</CheckBox>
+                    
+                    <Border x:Name="NotesBorder" Grid.Column="5" Grid.Row="3" BorderBrush="SaddleBrown" BorderThickness="1" Margin="2" ToolTip="" ToolTipService.InitialShowDelay="1000" ToolTipService.ShowDuration="10000" ToolTipService.BetweenShowDelay="2000" ToolTipService.HasDropShadow="true" ToolTipService.IsEnabled="true">
+                        <TextBlock x:Name="NotesTextBlock" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Center">NOTES</TextBlock>
+                    </Border>
+
+                    <TextBlock Style="{StaticResource CaptionStyle}" Grid.Column="0" Grid.Row="3">French name</TextBlock>
+                    <TextBlock Style="{StaticResource ValueStyle}" Grid.Column="1" Grid.Row="3" x:Name="FrenchTextBlock"/>
+                </Grid>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

@@ -1,0 +1,56 @@
+﻿<Window x:Class="Birds.QuizChecklistWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Birds"
+        mc:Ignorable="d"
+        Title="Bird Quiz" Height="900" Width="1400" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" FontFamily="Consolas" 
+        ContentRendered="Window_ContentRendered">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" Background="Azure" LastChildFill="False">
+            <TextBlock VerticalAlignment="Center" Margin="8 0 4 0">Included:</TextBlock>
+            <TextBlock x:Name="IncludedTextBlock" VerticalAlignment="Center" Margin="4 0" Foreground="ForestGreen">0</TextBlock>
+            <TextBlock VerticalAlignment="Center" Margin="8 0 4 0">Of which, rare:</TextBlock>
+            <TextBlock x:Name="IncludedRareTextBlock" VerticalAlignment="Center" Margin="4 0" Foreground="Red">0</TextBlock>
+            <TextBlock VerticalAlignment="Center" Margin="8 0 4 0">and recognisable:</TextBlock>
+            <TextBlock x:Name="IncludedRecoTextBlock" VerticalAlignment="Center" Margin="4 0" Foreground="Red">0</TextBlock>
+            <TextBlock VerticalAlignment="Center" Margin="8 0 4 0">Excluded:</TextBlock>
+            <TextBlock x:Name="ExcludedTextBlock" VerticalAlignment="Center" Margin="4 0" Foreground="ForestGreen">0</TextBlock>
+            <TextBlock VerticalAlignment="Center" Margin="8 0 4 0">Of which, rare:</TextBlock>
+            <TextBlock x:Name="ExcludedRareTextBlock" VerticalAlignment="Center" Margin="4 0" Foreground="Red">0</TextBlock>
+            <TextBlock VerticalAlignment="Center" Margin="8 0 4 0">and recognisable:</TextBlock>
+            <TextBlock x:Name="ExcludedRecoTextBlock" VerticalAlignment="Center" Margin="4 0" Foreground="Red">0</TextBlock>
+            <Menu VerticalAlignment="Center" Margin="8 0 0 0" Width="100">
+                <MenuItem Header="Selection">
+                    <MenuItem Header="Include all birds in quiz" Click="UntickAllButton_Click"></MenuItem>
+                    <MenuItem Header="Exclude rare birds" Click="TickRareButton_Click"></MenuItem>
+                    <MenuItem Header="Exclude recognisable birds" Click="TickRecognisableButton_Click"></MenuItem>
+                </MenuItem>
+            </Menu>
+            <Button DockPanel.Dock="Right" VerticalAlignment="Center" Height="28" Width="80" Margin="4 0 8 0" Background="Azure" IsCancel="True">CLOSE</Button>
+        </DockPanel>
+        
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Margin="6 0" Background="LightYellow" Orientation="Horizontal">
+                <TextBlock Margin="8 0 0 0" Width="100" VerticalAlignment="Center">Recognisable</TextBlock>
+                <TextBlock VerticalAlignment="Center">Barred</TextBlock>
+            </StackPanel>
+            <TextBlock Margin="8 0 0 0" Grid.Column="1" VerticalAlignment="Center">Recognisable birds (A-Z)</TextBlock>
+            <ListBox Margin="6 0 3 6" x:Name="QuizBirdListBox" Grid.Column="0" Grid.Row="1" Background="LightYellow"/>
+            <ListBox Margin="3 0 6 6" x:Name="FriendsListBox" Grid.Column="1" Grid.Row="1" Background="Cornsilk"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,40 @@
+﻿<Window x:Class="Birds.SequenceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Birds"
+        mc:Ignorable="d"
+        Title="Taxonomic sequence" Height="600" Width="1000" ShowInTaskbar="False" Loaded="Window_Loaded" FontFamily="Consolas" ContentRendered="Window_ContentRendered">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition/>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="0" VerticalAlignment="Center" FontWeight="Medium" Margin="4 0 0 0">Taxonomic sequence</TextBlock>
+        <TextBlock Grid.Column="1" VerticalAlignment="Center" FontWeight="Medium" Margin="2 0 0 0">English names</TextBlock>
+        <TextBlock Grid.Column="3" VerticalAlignment="Center" FontWeight="Medium" Margin="2 0 0 0" >Genera</TextBlock>
+        <TextBlock Grid.Column="4" VerticalAlignment="Center" FontWeight="Medium" Margin="2 0 0 0" >Species</TextBlock>
+        <TextBlock Grid.Column="5"  Grid.Row="1" TextWrapping="Wrap" Margin="2">The first box lists birds in the currently agreed taxonomic sequence. Select a bird using the English, or the generic and specific, name columns and then double-click an item in column one to relocate the selected bird. Check list by scientific name as these are liable to change with developing understanding of the likely evolutionary sequence. Check the sequence from the latest BOU list, estimating the location of any (e.g. Sacred Ibis) which I have seen but are not on the British list.</TextBlock>
+        
+        <ListBox Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" x:Name="SequenceListBox" Margin="4 2 2 2" Background="WhiteSmoke" MouseDoubleClick="SequenceListBox_MouseDoubleClick" SelectionChanged="SequenceListBox_SelectionChanged"></ListBox>
+        <ListBox Grid.Row="1" Grid.Column="1" x:Name="EnglishListBox" Margin="2" Background="WhiteSmoke" SelectionChanged="EnglishListBox_SelectionChanged"></ListBox>
+        <ListBox Grid.Row="1" Grid.Column="2" x:Name="AlphabetListBox" Margin="2" Background="WhiteSmoke" SelectionChanged="AlphabetListBox_SelectionChanged"></ListBox>
+        <ListBox Grid.Row="1" Grid.Column="3" x:Name="GeneraListBox" Margin="2 2 4 2" Background="WhiteSmoke" SelectionChanged="GeneraListBox_SelectionChanged"></ListBox>
+        <ListBox Grid.Row="1" Grid.Column="4" x:Name="SpeciesListBox" Margin="2 2 4 2" Background="WhiteSmoke" SelectionChanged="SpeciesListBox_SelectionChanged"></ListBox>
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="2" Orientation="Horizontal">
+            <TextBlock VerticalAlignment="Center"  Margin="4 0 0 0">Double-click a location in the sequence list to relocate</TextBlock>
+            <TextBlock x:Name="RubricEnglishTextBlock" VerticalAlignment="Center" Margin="4 0 0 0" FontWeight="Medium">the selected bird</TextBlock>
+            <TextBlock x:Name="RubricScientificTextBlock" VerticalAlignment="Center" Margin="4 0 0 0" FontWeight="Medium" FontStyle="Italic" ></TextBlock>
+        </StackPanel>
+    </Grid>
+</Window>

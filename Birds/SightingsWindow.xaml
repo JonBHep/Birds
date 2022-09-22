@@ -1,0 +1,84 @@
+﻿<Window x:Class="Birds.SightingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Birds"
+        mc:Ignorable="d"
+        Title="SightingsWindow" Height="300" Width="900" Loaded="Window_Loaded" Icon="JH Aramis bleu reference.ico" ShowInTaskbar="False" ResizeMode="NoResize" ContentRendered="Window_ContentRendered" AllowsTransparency="True" WindowStyle="None">
+    <Border Background="Transparent" CornerRadius="4" BorderThickness="1.2" BorderBrush="DarkGreen">
+        <Grid Margin="4" Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="386"></ColumnDefinition>
+                <ColumnDefinition Width="256"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="32"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <CheckBox x:Name="FirstsCheckBox" Margin="4" VerticalAlignment="Center" FontWeight="Bold" Checked="FirstsCheckBox_Checked" Unchecked="FirstsCheckBox_Unchecked" >First sightings</CheckBox>
+                <DockPanel x:Name="DatesDockPanel" Grid.Column="0" Grid.Row="1">
+                    <TextBlock DockPanel.Dock="Top" FontWeight="Bold" Margin="4">Dates</TextBlock>
+                    <ListBox x:Name="DatesListBox" Grid.Column="0" SelectionChanged="DatesListBox_SelectionChanged"></ListBox>
+                </DockPanel>
+                <DockPanel x:Name="SpeciesDockPanel" Grid.Column="1" Grid.Row="1" Margin="4 0 0 0">
+                    <TextBlock DockPanel.Dock="Top" FontWeight="Bold" Margin="4">Species</TextBlock>
+                    <ListBox x:Name="SpeciesListBox" Grid.Column="1" SelectionChanged="SpeciesListBox_SelectionChanged"></ListBox>
+                </DockPanel>
+            </Grid>
+            <DockPanel Grid.Column="1" Margin="4 0 4 0">
+                <TextBlock x:Name="ItemsCaptionTextBlock" DockPanel.Dock="Top" FontWeight="Bold" Margin="4">Sightings</TextBlock>
+                <ListBox x:Name="SightingsListBox" MinHeight="60" MouseDoubleClick="SightingsListBox_MouseDoubleClick"></ListBox>
+            </DockPanel>
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition MinHeight="100" Height="Auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock x:Name="RubricTextBlock" Padding="8 4" FontStyle="Italic" TextWrapping="Wrap">Birds are shown in red if they are flagged as too frequently seen to warrant recording of sightings.</TextBlock>
+                <Button Grid.Column="1" VerticalAlignment="Top" Margin="8 4" Padding="12 4" ToolTip="Close this window" IsCancel="True">Close</Button>
+                <Border Grid.Row="1" Grid.ColumnSpan="2" CornerRadius="4" Background="PapayaWhip" BorderBrush="SaddleBrown" BorderThickness="1">
+                    <DockPanel Margin="4">
+                        <CheckBox x:Name="RareCheckBox" DockPanel.Dock="Top" Margin="4 8" Unchecked="RareCheckBox_Unchecked" Checked="RareCheckBox_Unchecked">Include rare birds in the list</CheckBox>
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                            <TextBlock VerticalAlignment="Center" Margin="4">Sighting date</TextBlock>
+                            <Button x:Name="btnMinus" Height="24" Width="24" Margin="6 0"  Click="BtnMinus_Click" ToolTip="1 day earlier">
+                                <Polygon Fill="SaddleBrown" >
+                                    <Polygon.Points>
+                                        <Point X="6" Y="0"/>
+                                        <Point X="0" Y="5"/>
+                                        <Point X="6" Y="10"/>
+                                    </Polygon.Points>
+                                </Polygon>
+                            </Button>
+                            <Button x:Name="btnPlus" Height="24" Width="24" Margin="6 0" Click="BtnPlus_Click" ToolTip="1 day later">
+                                <Polygon Fill="SaddleBrown" >
+                                    <Polygon.Points>
+                                        <Point X="0" Y="0"/>
+                                        <Point X="6" Y="5"/>
+                                        <Point X="0" Y="10"/>
+                                    </Polygon.Points>
+                                </Polygon>
+                            </Button>
+                            <local:DateEntryTextBox x:Name="NewSightingDateBox" Margin="4"></local:DateEntryTextBox>
+                            <CheckBox x:Name="FirstSightingCheckBox" Margin="8 0 0 0" VerticalAlignment="Center" VerticalContentAlignment="Center">First sighting of this bird</CheckBox>
+                        </StackPanel>
+                        <Button DockPanel.Dock="Bottom" Padding="12 4" Margin="8" Width="100" Click="AddSightingButton_Click">Add sighting</Button>
+                        <ListBox x:Name="AllBirdsListBox"></ListBox>
+                    </DockPanel>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
